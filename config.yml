@@ -1,4 +1,4 @@
-name: SetJS post-css starter kit
+name: SetJS Bootstrap starter kit
 version: 1.0.0
 aws_vars: export $(cat .aws-vars | xargs)
 loader: progress-bar

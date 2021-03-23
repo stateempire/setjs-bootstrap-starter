@@ -4,7 +4,7 @@
 ## SETjs – A pragmatic frontend framework for the Web
 The easiest and fastest way to create your new Web project.
 
-_This is the SETjs postcss starter kit._
+_This is the SETjs Bootstrap starter kit._
 
 ## Documentation
 You can find the SETjs documentation [on our website](https://setjs.org/docs). And check out our [Getting Started](https://setjs.org/docs/getting-started) page for details on trying SETjs yourself.

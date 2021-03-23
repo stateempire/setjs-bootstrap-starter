@@ -11,7 +11,7 @@
   "author": "State Empire",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stateempire/setjs-postcss-starter"
+    "url": "https://github.com/stateempire/setjs-bootstrap-starter"
   },
   "license": "MIT",
   "devDependencies": {
