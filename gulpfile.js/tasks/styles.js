@@ -1,13 +1,11 @@
 var gulp = require('gulp');
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('node-sass'));
 var postcss = require('gulp-postcss');
 var gulpif = require('gulp-if');
 var cleanCSS = require('gulp-clean-css');
 var plumber = require('gulp-plumber');
 var browserSync = require('browser-sync');
 var {paths, env} = require('../setup.js');
-
-sass.compiler = require('node-sass');
 
 function buildCss(path) {
   return function () {
