@@ -1,15 +1,10 @@
 import {getProp} from 'setjs/utility/objects.js';
 import pageLoader from 'setjs/kernel/page-loader.js';
 import storage, {storageTypes} from 'setjs/kernel/storage.js';
-import eventManager, {eventTypes} from 'setjs/kernel/event-manager.js';
 import setup from 'config/setup.js';
 
 export let api = {};
 let isLoading = 0;
-
-eventManager.addListener(eventTypes.route, 'body', function() {
-  $('body').removeClass('loading');
-});
 
 export function addApis(apis) {
   Object.keys(apis).forEach(function(key) {
@@ -60,7 +55,7 @@ export function saveById(url, id = 'data.uuid') {
 
 export function deleteById(url, id = 'uuid') {
   return function(opts) {
-    let urlId = getProp(id, opts);
+    var urlId = getProp(id, opts);
     if (urlId) {
       ajaxCall($.extend({}, opts, {type: 'DELETE', relativeUrl: typeof url == 'string' ? `${url}/${urlId}` : url(opts)}));
     } else {
@@ -75,17 +70,17 @@ export function deleteById(url, id = 'uuid') {
  * @param {Object} opts - The options object
  */
 export function ajaxCall(ajaxOpts) {
-  let {isJSON, relativeUrl, type, data, success, error, complete, ignore401, noToken, useData, noLoading, api_url} = ajaxOpts;
-  let token = storage.get(storageTypes.token);
-  let headers = (token && !noToken) ? {[setup.authHeader()]: 'Bearer ' + token} : null;
-  let ajaxSettings = {
+  var {isJSON, relativeUrl, type, data, success, error, complete, ignore401, noToken, useData, noLoading, api_url} = ajaxOpts;
+  var token = storage.get(storageTypes.token);
+  var headers = (token && !noToken) ? {[setup.authHeader()]: 'Bearer ' + token, 'x-organisation': api.getUserOrgId()} : null;
+  var ajaxSettings = {
     url: (api_url || setup.api_url()) + relativeUrl,
     type: type || 'POST',
     headers,
     data,
     success, // res, textStatus, jqXHR
     complete: function(...args) {
-      if (ajaxSettings.type != 'GET') {
+      if (ajaxSettings.type != 'GET' && !noLoading) {
         $('body').toggleClass('loading', --isLoading > 0);
       }
       complete && complete(...args);
@@ -96,8 +91,8 @@ export function ajaxCall(ajaxOpts) {
       })) {
         return;
       }
-      let responseObj = jqXHR.responseJSON || {};
-      let errorMsg = 'Could not connect. Please try later.';
+      var responseObj = jqXHR.responseJSON || {};
+      var errorMsg = 'Could not connect. Please try later.';
       let errors = responseObj.data;
       if (jqXHR.responseJSON) {
         errorMsg = responseObj.message || 'There was an error. Please try later.';
